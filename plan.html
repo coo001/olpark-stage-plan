@@ -47,7 +47,15 @@
   </aside>
   <div class="stage">
     <div id="view"></div>
-    <div class="hud"><span id="status">준비 중…</span><span id="measure-out" class="num"></span></div>
+    <div id="nogl" hidden>
+      <h3>3D 없이 보는 사례 결과</h3>
+      <p class="muted">편집기는 WebGL을 켤 수 있는 PC 크롬·엣지·사파리에서 열립니다. 같은 사례를 이 도구로 미리 뽑아 둔 결과물입니다.</p>
+      <p><a href="examples/">사례 결과 모음(평면도 PNG · 장비 CSV · 무대설치 계획서 · 점검 결과)</a></p>
+      <img src="examples/woori/무대평면도.png" alt="사례 2 우리금융아트홀 밴드 콘서트 평면도">
+      <img src="examples/park88/무대평면도.png" alt="사례 1 88잔디마당 야외 페스티벌 평면도">
+    </div>
+    <noscript><div id="nogl">이 편집기는 JavaScript와 WebGL이 필요합니다. <a href="examples/">미리 뽑아 둔 사례 결과</a>를 보세요.</div></noscript>
+    <div class="hud"><span id="status">편집기를 여는 중… (3D 모델 4.9~8.4MB, 첫 방문은 몇 초 걸립니다)</span><span id="measure-out" class="num"></span></div>
   </div>
   <aside class="right">
     <section>
@@ -74,6 +82,16 @@
     <div class="wide btns"><button value="cancel">취소</button><button value="ok" class="primary">계획서 만들기</button></div>
   </form>
 </dialog>
+<script>
+// 스크립트가 어디서든 멈추면 '여는 중'에 머물지 않고 이유를 보여 준다
+addEventListener('error', function (e) {
+  if (document.body.dataset.ready || document.body.dataset.nogl) return;
+  if (e.target && e.target !== window && e.target.tagName !== 'SCRIPT') return; // 그림 하나 못 받은 것은 무시
+  var st = document.getElementById('status');
+  if (st) st.textContent = '편집기를 열지 못했습니다: ' + (e.message || (e.target && e.target.src) || '알 수 없는 오류') + ' — 미리 뽑아 둔 사례 결과는 examples/ 에 있습니다.';
+  var fb = document.getElementById('nogl'); if (fb) fb.hidden = false;
+}, true);
+</script>
 <script src="data/venues.js"></script>
 <script src="data/cases.js"></script>
 <script src="data/events.js"></script>

@@ -1,0 +1,156 @@
+{
+ "woori": {
+  "label": "사례 2 · 우리금융아트홀 밴드 콘서트",
+  "files": [
+   "무대설치계획서.html",
+   "무대설치계획서.png",
+   "무대평면도.png",
+   "장비목록.csv",
+   "편집화면.png",
+   "편집화면_3D.png"
+  ],
+  "checks": [
+   {
+    "status": "ok",
+    "head": "적합공연일과 겹치는 등록 행사없음",
+    "detail": "2027-03-20에 이 공연장으로 등록된 공개 행사가 없습니다. 비공개 대관·내부 일정은 목록에 없을 수 있어 기관 확인이 필요합니다.",
+    "basis": "기관 데이터 기준: 공개 행사 목록(공공데이터포털 15015212·3037877 연결 화면) 2,394건, 수집 2026-11-22"
+   },
+   {
+    "status": "info",
+    "head": "참고수용 인원(추정)768명",
+    "detail": "지정석 768명 · 스탠딩 0명. 통로·시야 제한석을 빼기 전 값입니다.",
+    "basis": "가정 기준: 지정석 0.5m×0.9m, 스탠딩 ㎡당 2명(가정)"
+   },
+   {
+    "status": "ok",
+    "head": "적합무대 끝 → 가장 먼 객석25.3 m",
+    "detail": "메인 스피커 한 조로 덮을 수 있는 거리 안입니다.",
+    "basis": "업계 관행·참고 기준: 60m 이상이면 딜레이 스피커 검토(업계 관행, 참고)"
+   },
+   {
+    "status": "ok",
+    "head": "적합콘솔(FOH) 시야열림",
+    "detail": "무대 앞에서 약 22.3m, 무대 중앙까지 가리는 것이 없습니다.",
+    "basis": "3D 모델 계산 기준: 콘솔 앞 눈높이에서 무대 위 1.7m 지점까지 직선(3D 모델 구조물 포함)"
+   },
+   {
+    "status": "info",
+    "head": "참고역광 조명4대",
+    "detail": "무대 중앙보다 뒤(객석 반대쪽)에 있어 역광으로 분류했습니다. 입사각 점검에서 뺍니다.",
+    "basis": ""
+   },
+   {
+    "status": "ok",
+    "head": "적합앞쪽 조명 입사각34~42°",
+    "detail": "앞쪽 조명 7대 모두 권장 범위 안입니다.",
+    "basis": "업계 관행·참고 기준: 무대 중앙 얼굴 높이 기준 30~60°(맥캔들리스 45° 관행, 참고)"
+   },
+   {
+    "status": "ok",
+    "head": "적합무대 덱 폭 ↔ 프로시니엄12.0 / 15.8 m",
+    "detail": "프로시니엄 안에 들어옵니다.",
+    "basis": "기관 데이터 기준: 기관 공개 제원: 프로시니엄 폭 15.8m, 높이 8.7m"
+   },
+   {
+    "status": "ok",
+    "head": "적합보유 덧마루로 덮을 수 있나64.8 / 68.0 ㎡",
+    "detail": "공연장 보유 덧마루 면적 안입니다(면적 기준, 높이·배치는 따로 확인).",
+    "basis": "기관 데이터 기준: 기관 공개 제원: 덧마루 1200×1800 18개(38.9㎡) + 900×1800 18개(29.2㎡) = 68.0㎡"
+   },
+   {
+    "status": "ok",
+    "head": "적합세트 반입구 통과2개 통과",
+    "detail": "가장 작은 두 변이 반입구 안에 들어옵니다(눕혀서 반입 가정).",
+    "basis": "기관 데이터 기준: 기관 공개 제원: 외부 장치 반입구 폭 4.3m × 높이 2.9m"
+   },
+   {
+    "status": "ok",
+    "head": "적합1번 조명 트러스(배튼) 배튼 하중392 / 750 kg",
+    "detail": "7대 조명 + 트러스 자중. 배튼 허용 하중 안입니다.",
+    "basis": "기관 제원+가정 기준: 기관 공개 제원: 세트 배튼 29개, 허용 하중 750kg, 길이 20m. 트러스 자중 12kg/m(가정)"
+   },
+   {
+    "status": "ok",
+    "head": "적합2번 조명 트러스(배튼) 배튼 하중296 / 750 kg",
+    "detail": "4대 조명 + 트러스 자중. 배튼 허용 하중 안입니다.",
+    "basis": "기관 제원+가정 기준: 기관 공개 제원: 세트 배튼 29개, 허용 하중 750kg, 길이 20m. 트러스 자중 12kg/m(가정)"
+   },
+   {
+    "status": "info",
+    "head": "참고아직 점검할 수 없는 것",
+    "detail": "배튼별 위치(무대 앞에서 거리), 전기 용량(무대·객석 분전반), 객석 단차·좌석 좌표. 기관 공개 자료에 없는 항목입니다.",
+    "basis": ""
+   }
+  ],
+  "share": "/plan.html?case=woori#p=eyJ2Ijoid29vcmkiLCJtIjp7InRpdGxlIjoi7IKs66GAIDIgwrcg7Jqw66as6riI7Jy17JWE7Yq47ZmAIOuwtOuTnCDsvZjshJztirgo6rCA7KCVKSIsImRhdGUiOiIyMDI364WEIDPsm5QgMjDsnbwo7YagKSAxOTowMCwgMe2ajCjqsIDsoJUpIiwibG9hZEluIjoiMy8xOSAwOTowMH4yMjowMCDrsJjsnoXCt-yEpOy5mCjqsIDsoJUpIiwicmVoZWFyc2FsIjoiMy8yMCAxMDowMH4xNjowMCjqsIDsoJUpIiwic3RyaWtlIjoiMy8yMCAyMTozMH4yNDowMCjqsIDsoJUpIiwiY2FzdCI6IjUiLCJjcmV3IjoiMTIifSwiaSI6W3sidHlwZSI6ImRlY2siLCJuYW1lIjoi67C065OcIOudvOydtOyggCIsInciOjEyLCJkIjo1LjQsImgiOjAuNiwieCI6LTguNSwieiI6LTMuNywicm90Ijo5MCwieSI6MH0seyJ0eXBlIjoidHJ1c3MiLCJuYW1lIjoiMeuyiCDsobDrqoUg7Yq465-s7IqkKOuwsO2KvCkiLCJ3IjoxNCwiZCI6MC4zLCJoIjowLjMsImVsZXYiOjgsImhhbmciOiJiYXR0ZW4iLCJ4IjotMTUsInoiOi0zLjcsInJvdCI6OTAsInkiOjB9LHsidHlwZSI6InRydXNzIiwibmFtZSI6IjLrsogg7KGw66qFIO2KuOufrOyKpCjrsLDtirwpIiwidyI6MTQsImQiOjAuMywiaCI6MC4zLCJlbGV2Ijo4LjUsImhhbmciOiJiYXR0ZW4iLCJ4IjotNiwieiI6LTMuNywicm90Ijo5MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoiMeuyiCDsobDrqoUgMSIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjgsIndlaWdodCI6MzIsIngiOi0xNSwieiI6LTkuNywicm90IjowLCJ5IjowfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiIx67KIIOyhsOuqhSAyIiwidyI6MC40LCJkIjowLjQsImgiOjAuNSwiZWxldiI6OCwid2VpZ2h0IjozMiwieCI6LTE1LCJ6IjotNy43LCJyb3QiOjAsInkiOjB9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IjHrsogg7KGw66qFIDMiLCJ3IjowLjQsImQiOjAuNCwiaCI6MC41LCJlbGV2Ijo4LCJ3ZWlnaHQiOjMyLCJ4IjotMTUsInoiOi01LjcsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoiMeuyiCDsobDrqoUgNCIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjgsIndlaWdodCI6MzIsIngiOi0xNSwieiI6LTMuNywicm90IjowLCJ5IjowfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiIx67KIIOyhsOuqhSA1IiwidyI6MC40LCJkIjowLjQsImgiOjAuNSwiZWxldiI6OCwid2VpZ2h0IjozMiwieCI6LTE1LCJ6IjotMS43LCJyb3QiOjAsInkiOjB9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IjHrsogg7KGw66qFIDYiLCJ3IjowLjQsImQiOjAuNCwiaCI6MC41LCJlbGV2Ijo4LCJ3ZWlnaHQiOjMyLCJ4IjotMTUsInoiOjAuMywicm90IjowLCJ5IjowfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiIx67KIIOyhsOuqhSA3IiwidyI6MC40LCJkIjowLjQsImgiOjAuNSwiZWxldiI6OCwid2VpZ2h0IjozMiwieCI6LTE1LCJ6IjoyLjMsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoiMuuyiCDsobDrqoUgMSIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjguNSwid2VpZ2h0IjozMiwieCI6LTYsInoiOi04LjcsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoiMuuyiCDsobDrqoUgMiIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjguNSwid2VpZ2h0IjozMiwieCI6LTYsInoiOi01LjcsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoiMuuyiCDsobDrqoUgMyIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjguNSwid2VpZ2h0IjozMiwieCI6LTYsInoiOi0xLjcsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoiMuuyiCDsobDrqoUgNCIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjguNSwid2VpZ2h0IjozMiwieCI6LTYsInoiOjEuMywicm90IjowLCJ5IjowfSx7InR5cGUiOiJzcGVha2VyIiwibmFtZSI6IuuplOyduCDsiqTtlLzsu6Qg7Jm87Kq9IiwidyI6MSwiZCI6MSwiaCI6Mi44LCJlbGV2IjowLCJ3ZWlnaHQiOjI1MCwieCI6LTE2LjIsInoiOi0xMS44LCJyb3QiOjAsInkiOjB9LHsidHlwZSI6InNwZWFrZXIiLCJuYW1lIjoi66mU7J24IOyKpO2UvOy7pCDsmKTrpbjsqr0iLCJ3IjoxLCJkIjoxLCJoIjoyLjgsImVsZXYiOjAsIndlaWdodCI6MjUwLCJ4IjotMTYuMiwieiI6NC40LCJyb3QiOjAsInkiOjB9LHsidHlwZSI6InNldCIsIm5hbWUiOiLrsLDqsr0g7IS47Yq4IOuyvSgy7Kq9IOykkSAxKSIsInciOjQsImQiOjAuNCwiaCI6NC4yLCJ4IjotMywieiI6LTYsInJvdCI6OTAsInkiOjB9LHsidHlwZSI6InNldCIsIm5hbWUiOiLrsLDqsr0g7IS47Yq4IOuyvSgy7Kq9IOykkSAyKSIsInciOjQsImQiOjAuNCwiaCI6NC4yLCJ4IjotMywieiI6LTEuNCwicm90Ijo5MCwieSI6MH0seyJ0eXBlIjoic2VhdHMiLCJuYW1lIjoiMey4tSDqsJ3shJ0g67KU7JyEKOqxsOumrCDsoJDqsoDsmqkpIiwidyI6MTYsImQiOjIyLCJoIjowLjA1LCJtb2RlIjoic2VhdGVkIiwieCI6LTI4LCJ6IjotMy43LCJyb3QiOjAsInkiOjQuOH0seyJ0eXBlIjoiZm9oIiwibmFtZSI6Iuy9mOyGlChGT0gpIiwidyI6MywiZCI6Mi41LCJoIjoxLCJ4IjotMzMuNSwieiI6LTMuNywicm90IjowLCJ5IjoxLjV9XX0"
+ },
+ "park88": {
+  "label": "사례 1 · 88잔디마당 야외 페스티벌",
+  "files": [
+   "무대설치계획서.html",
+   "무대설치계획서.png",
+   "무대평면도.png",
+   "장비목록.csv",
+   "편집화면.png",
+   "편집화면_3D.png"
+  ],
+  "checks": [
+   {
+    "status": "ok",
+    "head": "적합공연일과 겹치는 등록 행사없음",
+    "detail": "2027-05-22에 이 공연장으로 등록된 공개 행사가 없습니다. 비공개 대관·내부 일정은 목록에 없을 수 있어 기관 확인이 필요합니다.",
+    "basis": "기관 데이터 기준: 공개 행사 목록(공공데이터포털 15015212·3037877 연결 화면) 2,394건, 수집 2026-11-22"
+   },
+   {
+    "status": "info",
+    "head": "참고수용 인원(추정)2,816명",
+    "detail": "지정석 0명 · 스탠딩 2,816명. 통로·시야 제한석을 빼기 전 값입니다.",
+    "basis": "가정 기준: 지정석 0.5m×0.9m, 스탠딩 ㎡당 2명(가정)"
+   },
+   {
+    "status": "ok",
+    "head": "적합무대 끝 → 가장 먼 객석48.7 m",
+    "detail": "메인 스피커 한 조로 덮을 수 있는 거리 안입니다.",
+    "basis": "업계 관행·참고 기준: 60m 이상이면 딜레이 스피커 검토(업계 관행, 참고)"
+   },
+   {
+    "status": "ok",
+    "head": "적합콘솔(FOH) 시야열림",
+    "detail": "무대 앞에서 약 26.0m, 무대 중앙까지 가리는 것이 없습니다.",
+    "basis": "3D 모델 계산 기준: 콘솔 앞 눈높이에서 무대 위 1.7m 지점까지 직선(3D 모델 구조물 포함)"
+   },
+   {
+    "status": "info",
+    "head": "참고역광 조명4대",
+    "detail": "무대 중앙보다 뒤(객석 반대쪽)에 있어 역광으로 분류했습니다. 입사각 점검에서 뺍니다.",
+    "basis": ""
+   },
+   {
+    "status": "ok",
+    "head": "적합앞쪽 조명 입사각30~50°",
+    "detail": "앞쪽 조명 8대 모두 권장 범위 안입니다.",
+    "basis": "업계 관행·참고 기준: 무대 중앙 얼굴 높이 기준 30~60°(맥캔들리스 45° 관행, 참고)"
+   },
+   {
+    "status": "info",
+    "head": "참고앞 트러스 걸리는 무게480 kg",
+    "detail": "조명 8대 + 트러스 자중. 타워 한쪽에 약 절반씩 걸립니다. 타워·베이스 정격과 대조하세요.",
+    "basis": "가정 기준: 트러스 자중 12kg/m(가정)"
+   },
+   {
+    "status": "info",
+    "head": "참고뒤 트러스 걸리는 무게360 kg",
+    "detail": "조명 4대 + 트러스 자중. 타워 한쪽에 약 절반씩 걸립니다. 타워·베이스 정격과 대조하세요.",
+    "basis": "가정 기준: 트러스 자중 12kg/m(가정)"
+   },
+   {
+    "status": "info",
+    "head": "참고아직 점검할 수 없는 것",
+    "detail": "전기 인입 위치·용량, 차량 반입 경로 폭·하중, 잔디 보호 바닥재 기준, 소음 제한(시간대별 dB). 기관 공개 자료에 없는 항목입니다.",
+    "basis": ""
+   }
+  ],
+  "share": "/plan.html?case=park88#p=eyJ2IjoiODgiLCJtIjp7InRpdGxlIjoi7IKs66GAIDEgwrcgODjsnpTrlJTrp4jri7kg7JW87Jm4IO2OmOyKpO2LsOuyjCjqsIDsoJUpIiwiZGF0ZSI6IjIwMjfrhYQgNeyblCAyMuydvCjthqApIDE4OjAwLCAx7ZqMKOqwgOyglSkiLCJsb2FkSW4iOiI1LzIxIDA3OjAwfjIyOjAwIOustOuMgMK37Yq465-s7IqkIOuwmOyehcK37ISk7LmYKOqwgOyglSkiLCJyZWhlYXJzYWwiOiI1LzIyIDEwOjAwfjE1OjAwKOqwgOyglSkiLCJzdHJpa2UiOiI1LzIyIDIxOjAwfjUvMjMgMDY6MDAo6rCA7KCVKSIsImNhc3QiOiIyMCIsImNyZXciOiI0MCJ9LCJpIjpbeyJ0eXBlIjoiZGVjayIsIm5hbWUiOiLrqZTsnbgg66y064yAIiwidyI6MTgsImQiOjEyLCJoIjoxLjgsIngiOjAsInoiOi0zMiwicm90IjowLCJ5IjowLjN9LHsidHlwZSI6InRydXNzIiwibmFtZSI6IuyVniDtirjrn6zsiqQiLCJ3IjoyMCwiZCI6MC4zLCJoIjowLjMsImVsZXYiOjksImhhbmciOiJncm91bmQiLCJ4IjowLCJ6IjotMjcuNSwicm90IjowLCJ5IjowfSx7InR5cGUiOiJ0cnVzcyIsIm5hbWUiOiLrkqQg7Yq465-s7IqkIiwidyI6MjAsImQiOjAuMywiaCI6MC4zLCJlbGV2IjoxMCwiaGFuZyI6Imdyb3VuZCIsIngiOjAsInoiOi0zNiwicm90IjowLCJ5IjowLjJ9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IuyVniDsobDrqoUgMSIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjksIndlaWdodCI6MzAsIngiOi04LCJ6IjotMjcuNSwicm90IjowLCJ5IjowfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiLslZ4g7KGw66qFIDIiLCJ3IjowLjQsImQiOjAuNCwiaCI6MC41LCJlbGV2Ijo5LCJ3ZWlnaHQiOjMwLCJ4IjotNS41LCJ6IjotMjcuNSwicm90IjowLCJ5IjowfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiLslZ4g7KGw66qFIDMiLCJ3IjowLjQsImQiOjAuNCwiaCI6MC41LCJlbGV2Ijo5LCJ3ZWlnaHQiOjMwLCJ4IjotMywieiI6LTI3LjUsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoi7JWeIOyhsOuqhSA0IiwidyI6MC40LCJkIjowLjQsImgiOjAuNSwiZWxldiI6OSwid2VpZ2h0IjozMCwieCI6LTEsInoiOi0yNy41LCJyb3QiOjAsInkiOjB9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IuyVniDsobDrqoUgNSIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjksIndlaWdodCI6MzAsIngiOjEsInoiOi0yNy41LCJyb3QiOjAsInkiOjB9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IuyVniDsobDrqoUgNiIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjksIndlaWdodCI6MzAsIngiOjMsInoiOi0yNy41LCJyb3QiOjAsInkiOi0wLjF9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IuyVniDsobDrqoUgNyIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjksIndlaWdodCI6MzAsIngiOjUuNSwieiI6LTI3LjUsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoi7JWeIOyhsOuqhSA4IiwidyI6MC40LCJkIjowLjQsImgiOjAuNSwiZWxldiI6OSwid2VpZ2h0IjozMCwieCI6OCwieiI6LTI3LjUsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoibGlnaHQiLCJuYW1lIjoi65KkIOyhsOuqhSAxIiwidyI6MC40LCJkIjowLjQsImgiOjAuNSwiZWxldiI6MTAsIndlaWdodCI6MzAsIngiOi03LCJ6IjotMzYsInJvdCI6MCwieSI6MC4yfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiLrkqQg7KGw66qFIDIiLCJ3IjowLjQsImQiOjAuNCwiaCI6MC41LCJlbGV2IjoxMCwid2VpZ2h0IjozMCwieCI6LTMsInoiOi0zNiwicm90IjowLCJ5IjowLjJ9LHsidHlwZSI6ImxpZ2h0IiwibmFtZSI6IuuSpCDsobDrqoUgMyIsInciOjAuNCwiZCI6MC40LCJoIjowLjUsImVsZXYiOjEwLCJ3ZWlnaHQiOjMwLCJ4IjozLCJ6IjotMzYsInJvdCI6MCwieSI6MC4yfSx7InR5cGUiOiJsaWdodCIsIm5hbWUiOiLrkqQg7KGw66qFIDQiLCJ3IjowLjQsImQiOjAuNCwiaCI6MC41LCJlbGV2IjoxMCwid2VpZ2h0IjozMCwieCI6NywieiI6LTM2LCJyb3QiOjAsInkiOjAuMn0seyJ0eXBlIjoic3BlYWtlciIsIm5hbWUiOiLrqZTsnbgg7Iqk7ZS87LukIOyZvOyqvSIsInciOjEuNCwiZCI6MS4yLCJoIjo2LCJlbGV2Ijo0LCJ3ZWlnaHQiOjkwMCwieCI6LTExLjUsInoiOi0yNywicm90IjowLCJ5IjowfSx7InR5cGUiOiJzcGVha2VyIiwibmFtZSI6IuuplOyduCDsiqTtlLzsu6Qg7Jik66W47Kq9IiwidyI6MS40LCJkIjoxLjIsImgiOjYsImVsZXYiOjQsIndlaWdodCI6OTAwLCJ4IjoxMS41LCJ6IjotMjcsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoiZmVuY2UiLCJuYW1lIjoi66y064yAIOyVniDtjpzsiqQiLCJ3IjoyNCwiZCI6MC4xLCJoIjoxLjIsIngiOjAsInoiOi0yNCwicm90IjowLCJ5IjotMC4xfSx7InR5cGUiOiJzZWF0cyIsIm5hbWUiOiLslZ4g7Iqk7YOg65SpIiwidyI6MzAsImQiOjEwLCJoIjowLjA1LCJtb2RlIjoic3RhbmRpbmciLCJ4IjowLCJ6IjotMTgsInJvdCI6MCwieSI6MH0seyJ0eXBlIjoic2VhdHMiLCJuYW1lIjoi7Jm87Kq9IOyKpO2DoOuUqSIsInciOjE2LCJkIjoyNCwiaCI6MC4wNSwibW9kZSI6InN0YW5kaW5nIiwieCI6LTIyLCJ6IjotMiwicm90IjowLCJ5IjowLjJ9LHsidHlwZSI6InNlYXRzIiwibmFtZSI6IuyYpOuluOyqvSDsiqTtg6DrlKkiLCJ3IjoxNiwiZCI6MjQsImgiOjAuMDUsIm1vZGUiOiJzdGFuZGluZyIsIngiOjIyLCJ6IjotMiwicm90IjowLCJ5IjowLjN9LHsidHlwZSI6InNlYXRzIiwibmFtZSI6IuuSpCDsiqTtg6DrlKkiLCJ3IjozNCwiZCI6MTAsImgiOjAuMDUsIm1vZGUiOiJzdGFuZGluZyIsIngiOjAsInoiOjE3LCJyb3QiOjAsInkiOjAuM30seyJ0eXBlIjoiZm9oIiwibmFtZSI6Iuy9mOyGlChGT0gpIiwidyI6NSwiZCI6NCwiaCI6MSwieCI6MCwieiI6MCwicm90IjowLCJ5IjowLjZ9XX0"
+ }
+}

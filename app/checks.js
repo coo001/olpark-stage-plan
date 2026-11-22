@@ -202,7 +202,7 @@ export function runChecks(venue, items, { raycastVenue, THREE }) {
       out.push({
         status: area > own ? 'info' : 'ok', title: '보유 덧마루로 덮을 수 있나', value: `${f1(area)} / ${f1(own)} ㎡`,
         detail: area > own ? `보유 덧마루(1.2×1.8m 18개, 0.9×1.8m 18개)보다 ${f1(area - own)}㎡ 넓습니다. 나머지는 외부 반입이 필요합니다(면적 기준).` : '공연장 보유 덧마루 면적 안입니다(면적 기준, 높이·배치는 따로 확인).',
-        basis: '기관 공개 제원: 덧마루 1200×1800 18개, 900×1800 18개',
+        basis: '기관 공개 제원: 덧마루 1200×1800 18개(38.9㎡) + 900×1800 18개(29.2㎡) = 68.0㎡',
       });
     }
   }

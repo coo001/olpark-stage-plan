@@ -32,7 +32,17 @@ let uid = 1;
 
 // ---------- 렌더러 ----------
 const viewEl = $('#view');
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+// WebGL이 없는 브라우저(일부 원격·가상 환경, 텍스트 브라우저)에서는 3D 대신 미리 뽑아 둔 사례 결과를 보여 준다
+function showNoGL(err) {
+  document.body.dataset.nogl = '1';
+  const st = document.getElementById('status');
+  if (st) st.textContent = `이 브라우저에서는 3D(WebGL)를 켤 수 없습니다. 아래 미리 뽑아 둔 사례 결과(평면도·장비 목록·계획서)를 보세요. (${err && err.message ? err.message : 'WebGL 없음'})`;
+  const fb = document.getElementById('nogl');
+  if (fb) fb.hidden = false;
+}
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); }
+catch (e) { showNoGL(e); throw e; }
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 viewEl.appendChild(renderer.domElement);
@@ -142,10 +152,26 @@ function loadScript(src) {
     document.head.appendChild(s);
   });
 }
+// 첫 방문은 모델(최대 8.4MB)을 받는 데 시간이 걸리므로 받은 양을 보여 준다
+async function readWithProgress(r) {
+  const total = Number(r.headers.get('content-length')) || 0;
+  if (!r.body) return r.arrayBuffer();
+  const reader = r.body.getReader();
+  const chunks = [];
+  let got = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    got += value.length;
+    setStatus(`${state.venue.name} 3D 모델을 받는 중… ${fmt(got / 1e6)}${total ? ` / ${fmt(total / 1e6)}` : ''} MB`);
+  }
+  return new Blob(chunks).arrayBuffer();
+}
 async function modelBuffer(key) {
   if (location.protocol !== 'file:') {
     const r = await fetch(`models/${key}.glb`);
-    if (r.ok) return r.arrayBuffer();
+    if (r.ok) return readWithProgress(r);
   }
   await loadScript(`models/${key}.glb.js`);
   const b64 = window.OLPARK_MODEL[key];
@@ -310,6 +336,8 @@ let lastChecks = [];
 function refresh() {
   rebuildItems();
   lastChecks = runChecks(state.venue, state.items, { raycastVenue, THREE });
+  const ev = eventCheck();
+  if (ev) lastChecks.unshift(ev);
   drawHelpers(lastChecks);
   renderList();
   renderProps();
@@ -355,8 +383,37 @@ function renderProps() {
 }
 
 const ICON = { ok: '적합', warn: '확인', fail: '부적합', info: '참고' };
+// 기준이 어디서 왔는지: 기관 데이터 / 3D 모델 계산 / 업계 관행(참고) / 가정
+function basisTag(c) {
+  const b = c.basis || '';
+  if (/기관 공개 제원|공개 행사 목록/.test(b)) return /가정/.test(b) ? '기관 제원+가정' : '기관 데이터';
+  if (/3D 모델/.test(b)) return '3D 모델 계산';
+  if (/관행/.test(b)) return '업계 관행·참고';
+  if (/가정/.test(b)) return '가정';
+  return '';
+}
 function renderChecks(checks) {
-  $('#checks').innerHTML = checks.map((c) => `<div class="chk ${c.status}"><div class="chk-h"><b>${ICON[c.status]}</b><span>${esc(c.title)}</span><span class="num">${esc(c.value || '')}</span></div><p>${esc(c.detail || '')}</p>${c.basis ? `<p class="basis">기준: ${esc(c.basis)}</p>` : ''}</div>`).join('') || '<p class="muted">무대 덱과 객석을 놓으면 점검이 시작됩니다.</p>';
+  const body = checks.map((c) => { const t = basisTag(c); return `<div class="chk ${c.status}"><div class="chk-h"><b>${ICON[c.status]}</b><span>${esc(c.title)}</span><span class="num">${esc(c.value || '')}</span></div><p>${esc(c.detail || '')}</p>${c.basis ? `<p class="basis">${t ? `<span class="tag">${t}</span> ` : ''}기준: ${esc(c.basis)}</p>` : ''}</div>`; }).join('');
+  $('#checks').innerHTML = body ? `<p class="safety">사전 검토용입니다. '적합'은 안전 승인이 아니며 공연장 무대팀 협의·실측으로 확인해야 합니다.</p>${body}` : '<p class="muted">무대 덱과 객석을 놓으면 점검이 시작됩니다.</p>';
+}
+
+// 계획서에 적은 공연일이 공개 행사 목록에서 같은 공연장 행사와 겹치는지 본다(대관 가능 여부 자체는 기관 확인)
+function parseDates(text) {
+  const out = [];
+  const re = /(20\d{2})\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})/g;
+  let m;
+  while ((m = re.exec(text || ''))) out.push(`${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`);
+  return out;
+}
+function eventCheck() {
+  const days = parseDates(state.meta.date);
+  if (!days.length) return null;
+  const re = new RegExp(state.venue.eventMatch);
+  const hits = EVENTS.filter((e) => re.test(e.plc) && days.some((d) => e.beginDt <= d && d <= (e.endDt || e.beginDt)));
+  const src = `공개 행사 목록(공공데이터포털 15015212·3037877 연결 화면) ${EVENTS.length.toLocaleString('ko-KR')}건, 수집 ${(window.OLPARK_EVENTS?.collectedAt || '').slice(0, 10)}`;
+  return hits.length
+    ? { status: 'warn', title: '공연일과 겹치는 등록 행사', value: `${hits.length}건`, detail: hits.slice(0, 3).map((e) => `${e.beginDt}~${e.endDt} ${e.title}`).join(' / ') + ' — 대관 일정을 기관에 먼저 문의하세요.', basis: src }
+    : { status: 'ok', title: '공연일과 겹치는 등록 행사', value: '없음', detail: `${days.join(', ')}에 이 공연장으로 등록된 공개 행사가 없습니다. 비공개 대관·내부 일정은 목록에 없을 수 있어 기관 확인이 필요합니다.`, basis: src };
 }
 
 function renderVenueInfo() {
@@ -593,7 +650,7 @@ async function exportPNG(download = true) {
   const sum = lastChecks.filter((c) => c.status !== 'info').map((c) => `${ICON[c.status]} ${c.title} ${c.value || ''}`).slice(0, 4).join('  ·  ');
   g.fillText(sum, pad, ty + 68);
   g.fillStyle = '#555';
-  g.fillText(`3D 모델: ${v.modelSource}. 모델 단순화 오차가 있어 답사·실측을 대신하지 않습니다.`, pad, ty + 100);
+  g.fillText(`3D 모델: ${v.modelSource}. 모델 단순화 오차가 있어 답사·실측을 대신하지 않습니다. 자동 점검 '적합'은 안전 승인이 아닙니다.`, pad, ty + 100);
   g.fillText(`올팍 무대도면으로 작성 · ${new Date().toLocaleDateString('ko-KR')} · 한국체육산업개발 공식 서비스가 아님`, pad, ty + 126);
   const url = cv.toDataURL('image/png');
   if (download) dl(url, `무대평면도_${v.name}.png`);
@@ -602,7 +659,8 @@ async function exportPNG(download = true) {
 
 function equipmentRows() {
   const rows = [['구분', '이름', '가로(m)', '세로(m)', '높이(m)', '설치 높이(m)', 'X(m)', 'Z(m)', '회전(°)', '무게(kg)', '수용(명)']];
-  for (const it of state.items) rows.push([TYPES[it.type].label, it.name, it.w, it.d, it.h ?? '', it.elev ?? '', it.x, it.z, it.rot || 0, itemWeight(it) || '', it.type === 'seats' ? seatCount(it) : '']);
+  const r2 = (n) => (n == null || n === '' ? '-' : Math.round(n * 100) / 100);
+  for (const it of state.items) rows.push([TYPES[it.type].label, it.name, r2(it.w), r2(it.d), r2(it.h), r2(it.elev), r2(it.x), r2(it.z), Math.round(it.rot || 0), itemWeight(it) || '-', it.type === 'seats' ? seatCount(it) : '-']);
   return rows;
 }
 function exportCSV() {
@@ -637,7 +695,7 @@ async function openForm() {
 <h2>별첨 1. 무대장치 평면도</h2><img src="${png}" alt="무대 배치 평면도">
 <h2>별첨 2. 장비 목록</h2><table>${rows.map((r, i) => `<tr>${r.map((c) => (i ? `<td>${esc(c)}</td>` : `<th style="width:auto">${esc(c)}</th>`)).join('')}</tr>`).join('')}</table>
 <h2>별첨 3. 자동 점검 결과</h2><table>${lastChecks.map((c) => `<tr><th style="width:30%">${esc(c.title)}</th><td><b class="${c.status}">${ICON[c.status]}</b> ${esc(c.value || '')}<br>${esc(c.detail || '')}${c.basis ? `<br><span class="small">기준: ${esc(c.basis)}</span>` : ''}</td></tr>`).join('')}</table>
-<p class="small">이 문서는 올팍 무대도면(공공데이터 활용)으로 만든 초안이며 한국체육산업개발 공식 서식 파일을 대신하지 않습니다. 3D 모델은 단순화 오차가 있어 무대 스태프 회의와 실측으로 확인해야 합니다.</p></html>`);
+<p class="small"><b>자동 점검의 '적합'은 안전 승인이 아닙니다.</b> 기관 공개 제원과 비교한 항목, 3D 모델로 계산한 항목, 업계 관행·가정을 쓴 항목을 '기준'에 구분해 적었습니다. 이 문서는 올팍 무대도면(공공데이터 활용)으로 만든 초안이며 한국체육산업개발 공식 서식 파일을 대신하지 않습니다. 3D 모델은 단순화 오차가 있어 무대 스태프 회의와 실측으로 확인해야 합니다.</p></html>`);
   w.document.close();
 }
 
@@ -650,7 +708,7 @@ $('#meta').addEventListener('close', () => {
   const d = $('#meta');
   if (d.returnValue !== 'ok') return;
   for (const k of Object.keys(state.meta)) state.meta[k] = d.querySelector(`[name=${k}]`).value;
-  writeHash();
+  refresh(); // 공연일이 바뀌면 행사 겹침 점검도 다시 계산한다
   openForm();
 });
 
