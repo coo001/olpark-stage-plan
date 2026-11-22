@@ -1,0 +1,64 @@
+/* 첫 화면 — 편집기와 같은 종이 도면 규칙. 카드 대신 구분선 */
+body.home { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.top { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--ink); }
+.top nav { display: flex; gap: 18px; font-size: 13px; }
+.top nav a { text-decoration: none; color: var(--ink-2); }
+.top nav a:hover { color: var(--ink); text-decoration: underline; }
+
+.hero { display: grid; grid-template-columns: 5fr 7fr; gap: 40px; align-items: center; padding: 56px 0 48px; border-bottom: 1px solid var(--ink); }
+.eyebrow { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; letter-spacing: .02em; }
+.hero h1 { font-size: 46px; line-height: 1.15; letter-spacing: -.03em; margin: 0 0 18px; font-weight: 800; }
+.lead { font-size: 16px; color: var(--ink-2); margin: 0 0 24px; }
+.lead b { color: var(--ink); }
+.btn { display: inline-block; padding: 10px 16px; border: 1px solid var(--ink); border-radius: 2px; text-decoration: none; background: #fff; margin: 0 6px 6px 0; }
+.btn.primary { background: var(--sel); border-color: var(--sel); color: #fff; }
+.hero-shot { margin: 0; }
+.hero-shot img { width: 100%; height: auto; border: 1px solid var(--ink); display: block; }
+.hero-shot figcaption, .note { font-size: 12.5px; color: var(--ink-3); margin-top: 8px; }
+
+.band { padding: 40px 0; border-bottom: 1px solid var(--rule); }
+.band h2 { font-size: 22px; letter-spacing: -.02em; margin: 0 0 16px; }
+.band h3 { font-size: 15px; margin: 24px 0 8px; }
+
+.venue-rows { border-top: 1px solid var(--ink); }
+.venue-row { display: grid; grid-template-columns: 2fr 1fr 3fr auto; gap: 20px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.venue-row:hover { background: #f4f3ef; }
+.venue-row h3 { margin: 0 0 2px; font-size: 18px; }
+.venue-row p { margin: 0; font-size: 13px; }
+.vr-num .num { font-size: 28px; font-weight: 700; margin-right: 4px; }
+.venue-row ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--ink-2); }
+.venue-row ul .num { color: var(--ink-3); font-size: 12px; }
+.go { font-weight: 700; color: var(--sel); }
+
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--ink); }
+.steps li { counter-increment: s; padding: 16px 20px 4px 0; display: flex; flex-direction: column; gap: 6px; }
+.steps li + li { border-left: 1px solid var(--rule); padding-left: 20px; }
+.steps li b::before { content: counter(s) "  "; font-family: var(--mono); color: var(--sel); }
+.steps span { color: var(--ink-2); font-size: 14px; }
+
+.case-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.case { text-decoration: none; display: block; }
+.case img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center; border: 1px solid var(--ink); display: block; }
+.case h3 { margin: 12px 0 6px; }
+.case p { margin: 0; color: var(--ink-2); font-size: 14px; }
+.case:hover h3 { color: var(--sel); }
+
+.crit { width: 100%; border-collapse: collapse; font-size: 14px; }
+.crit th { text-align: left; font-size: 12px; color: var(--ink-2); border-bottom: 1px solid var(--ink); padding: 6px 10px 6px 0; }
+.crit td { border-bottom: 1px solid var(--rule); padding: 9px 10px 9px 0; vertical-align: top; }
+.crit td:first-child { font-weight: 600; width: 26%; }
+.tag { font-size: 11px; border: 1px solid var(--ink-3); color: var(--ink-2); padding: 0 4px; border-radius: 2px; margin-right: 4px; white-space: nowrap; }
+.tag.org { border-color: var(--sel); color: var(--sel); }
+.limits { padding-left: 18px; color: var(--ink-2); }
+.limits li { margin-bottom: 6px; }
+.foot { padding: 24px 0 40px; font-size: 12.5px; color: var(--ink-3); }
+
+@media (max-width: 860px) {
+  .hero, .case-rows { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 34px; }
+  .venue-row { grid-template-columns: 1fr auto; }
+  .venue-row ul { grid-column: 1 / -1; }
+  .steps { grid-template-columns: 1fr; }
+  .steps li + li { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); }
+  .top nav { display: none; }
+}

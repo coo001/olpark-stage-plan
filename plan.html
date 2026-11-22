@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>올팍 무대도면</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="editor">
+<header class="bar">
+  <a class="brand" href="index.html">올팍 무대도면</a>
+  <div class="venue"><b id="venue-name">…</b> <span id="venue-kind" class="muted"></span></div>
+  <nav class="tools">
+    <span class="seg"><button data-view="persp" class="on">3D</button><button data-view="top">평면</button></span>
+    <label class="cut" title="이 높이보다 위를 잘라 내고 봅니다(지붕·무대탑 걷어 내기)">단면 <input id="cut" type="range" min="2" max="25" step="0.5"> <span id="cut-out" class="num"></span></label>
+    <button id="btn-measure">치수 재기</button>
+    <span class="sep"></span>
+    <button id="btn-png">평면도 PNG</button>
+    <button id="btn-csv">장비 CSV</button>
+    <button id="btn-link">공유 주소</button>
+    <button id="btn-form" class="primary">무대설치 계획서</button>
+  </nav>
+</header>
+<main class="work">
+  <aside class="left">
+    <section>
+      <h3>놓기</h3>
+      <div id="palette" class="palette"></div>
+    </section>
+    <section>
+      <h3>설계 사례</h3>
+      <div id="cases" class="cases"></div>
+    </section>
+    <section>
+      <h3>놓은 것 <button id="btn-clear" class="link">모두 지우기</button></h3>
+      <div id="items" class="items"></div>
+    </section>
+    <section>
+      <h3>공연장 제원</h3>
+      <div id="venue-spec"></div>
+    </section>
+    <section>
+      <h3>대관 이력</h3>
+      <div id="history"></div>
+    </section>
+  </aside>
+  <div class="stage">
+    <div id="view"></div>
+    <div class="hud"><span id="status">준비 중…</span><span id="measure-out" class="num"></span></div>
+  </div>
+  <aside class="right">
+    <section>
+      <h3>선택한 장비</h3>
+      <div id="props" class="props"></div>
+    </section>
+    <section>
+      <h3>자동 점검</h3>
+      <div id="checks"></div>
+    </section>
+  </aside>
+</main>
+<dialog id="meta">
+  <form method="dialog">
+    <h3>무대설치 계획서(서식 제7호) 초안</h3>
+    <p class="muted">기관 서식 항목 순서대로 채웁니다. 비워 두면 빈칸으로 나옵니다. 입력한 내용은 이 브라우저 주소에만 담기고 어디에도 보내지 않습니다.</p>
+    <label class="f wide"><span>공연명</span><input name="title"></label>
+    <label class="f wide"><span>공연일시</span><input name="date" placeholder="예: 2027년 5월 22~23일 (2일 3회)"></label>
+    <label class="f wide"><span>무대시설 작업일정</span><input name="loadIn" placeholder="예: 5/21 08:00~22:00 반입·설치"></label>
+    <label class="f wide"><span>무대연습 일정</span><input name="rehearsal"></label>
+    <label class="f wide"><span>무대철수 작업일정</span><input name="strike"></label>
+    <label class="f"><span>출연자(명)</span><input name="cast" type="number"></label>
+    <label class="f"><span>외부스텝(명)</span><input name="crew" type="number"></label>
+    <div class="wide btns"><button value="cancel">취소</button><button value="ok" class="primary">계획서 만들기</button></div>
+  </form>
+</dialog>
+<script src="data/venues.js"></script>
+<script src="data/cases.js"></script>
+<script src="data/events.js"></script>
+<script src="assets/plan.js"></script>
+</body>
+</html>

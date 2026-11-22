@@ -1,0 +1,24 @@
+# 하루 한 번 올림픽공원 공연·행사 공개 목록을 받아 data/events.json·events.js 를 갱신한다(키 없음, 운영비 0원)
+name: collect-events
+on:
+  schedule:
+    - cron: '10 18 * * *' # 매일 03:10 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: 최근 3개월~내년 목록 수집
+        run: |
+          S=$(date -d '-3 month' +%Y%m); E=$(date -d '+12 month' +%Y%m)
+          node scripts/collect_events.mjs $S $E
+      - name: 바뀌었으면 커밋
+        run: |
+          git config user.name "github-actions"; git config user.email "actions@users.noreply.github.com"
+          git add data/events.json data/events.js
+          git diff --cached --quiet || git commit -m "data: 공연·행사 목록 갱신 $(date +%F)" && git push

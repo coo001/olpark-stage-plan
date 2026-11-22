@@ -1,0 +1,17 @@
+{
+  "name": "olpark-stage-plan",
+  "private": true,
+  "description": "올팍 무대도면 — 올림픽공원 공연장 3D 모델 위 무대 배치·점검 도구",
+  "scripts": {
+    "build": "esbuild app/plan.js --bundle --minify --format=iife --target=es2020 --outfile=assets/plan.js",
+    "events": "node scripts/collect_events.mjs",
+    "models": "sh scripts/build_models.sh"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4",
+    "esbuild": "^0.24",
+    "three": "0.170.0",
+    "three-mesh-bvh": "0.8.3"
+  },
+  "type": "module"
+}
