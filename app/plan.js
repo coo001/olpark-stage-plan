@@ -413,7 +413,7 @@ function eventCheck() {
   const src = `공개 행사 목록(공공데이터포털 15015212·3037877 연결 화면) ${EVENTS.length.toLocaleString('ko-KR')}건, 수집 ${(window.OLPARK_EVENTS?.collectedAt || '').slice(0, 10)}`;
   return hits.length
     ? { status: 'warn', title: '공연일과 겹치는 등록 행사', value: `${hits.length}건`, detail: hits.slice(0, 3).map((e) => `${e.beginDt}~${e.endDt} ${e.title}`).join(' / ') + ' — 대관 일정을 기관에 먼저 문의하세요.', basis: src }
-    : { status: 'ok', title: '공연일과 겹치는 등록 행사', value: '없음', detail: `${days.join(', ')}에 이 공연장으로 등록된 공개 행사가 없습니다. 비공개 대관·내부 일정은 목록에 없을 수 있어 기관 확인이 필요합니다.`, basis: src };
+    : { status: 'info', title: '공연일과 겹치는 등록 행사', value: '목록에 없음', detail: `${days.join(', ')}에 이 공연장으로 등록된 공개 행사가 없습니다. 대관할 수 있다는 뜻은 아닙니다(비공개 대관·내부 일정은 목록에 없음). 대관 가능 여부는 기관에 문의하세요.`, basis: src };
 }
 
 function renderVenueInfo() {
@@ -602,7 +602,7 @@ function planImage(scale = 1) {
 
 async function exportPNG(download = true) {
   const { img, cam, W, H } = planImage();
-  const pad = 40, foot = 150;
+  const pad = 40, foot = 230;
   const cv = document.createElement('canvas');
   cv.width = W + pad * 2; cv.height = H + pad * 2 + foot;
   const g = cv.getContext('2d');
@@ -610,28 +610,37 @@ async function exportPNG(download = true) {
   const im = new Image(); im.src = img; await im.decode();
   g.drawImage(im, pad, pad);
   g.strokeStyle = '#111'; g.lineWidth = 2; g.strokeRect(pad, pad, W, H);
-  // 장비 이름표
+  // 장비 이름표: 축소 인쇄해도 읽히게 크게 쓰고, 겹치면 위아래로 번갈아 비킨 뒤 장비 중심까지 지시선을 긋는다
   const pxPerM = W / (cam.right - cam.left);
-  g.font = '600 20px "Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  g.font = '600 26px "Apple SD Gothic Neo","Noto Sans KR",sans-serif';
   g.textAlign = 'center'; g.textBaseline = 'middle';
-  // 조명기는 개수가 많아 이름표 대신 트러스 이름표에 대수를 붙이고, 이름표끼리 겹치면 아래로 비킨다
+  const LH = 36;
   const placed = [];
+  const hit = (x, y, w) => placed.some((r) => Math.abs(r.x - x) < (r.w + w) / 2 + 4 && Math.abs(r.y - y) < LH + 2);
+  // 조명기는 개수가 많아 이름표 대신 대수만 적는다
   for (const it of state.items) {
     if (it.type === 'light') continue;
     const p = new THREE.Vector3(it.x, 0, it.z).project(cam);
-    const x = pad + (p.x + 1) / 2 * W;
-    let y = pad + (1 - p.y) / 2 * H;
+    const x0 = pad + (p.x + 1) / 2 * W, y0 = pad + (1 - p.y) / 2 * H;
     const label = it.type === 'seats' ? `${it.name}  ${seatCount(it).toLocaleString('ko-KR')}명` : `${it.name}  ${fmt(it.w)}×${fmt(it.d)}m`;
-    const tw = g.measureText(label).width + 12;
-    for (let k = 0; k < 8 && placed.some((r) => Math.abs(r.x - x) < (r.w + tw) / 2 && Math.abs(r.y - y) < 28); k++) y += 30;
+    const tw = g.measureText(label).width + 16;
+    const x = Math.min(Math.max(x0, pad + tw / 2 + 4), pad + W - tw / 2 - 4);
+    let y = y0;
+    for (let k = 1; k < 16 && hit(x, y, tw); k++) y = y0 + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * (LH + 4);
     placed.push({ x, y, w: tw });
-    g.fillStyle = 'rgba(255,255,255,.9)'; g.fillRect(x - tw / 2, y - 14, tw, 28);
-    g.fillStyle = '#111'; g.fillText(label, x, y);
+    if (Math.abs(y - y0) > 1 || Math.abs(x - x0) > 1) {
+      g.strokeStyle = '#111'; g.lineWidth = 1.5;
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(x, y > y0 ? y - LH / 2 : y + LH / 2); g.stroke();
+      g.fillStyle = '#111'; g.beginPath(); g.arc(x0, y0, 4, 0, Math.PI * 2); g.fill();
+    }
+    g.fillStyle = 'rgba(255,255,255,.94)'; g.fillRect(x - tw / 2, y - LH / 2, tw, LH);
+    g.strokeStyle = '#111'; g.lineWidth = 1; g.strokeRect(x - tw / 2, y - LH / 2, tw, LH);
+    g.fillStyle = '#111'; g.fillText(label, x, y + 1);
   }
   const nLights = state.items.filter((i) => i.type === 'light').length;
   if (nLights) {
     g.textAlign = 'right'; g.fillStyle = '#111';
-    g.fillText(`조명기 ${nLights}대(주황 점)`, pad + W - 16, pad + H - 26);
+    g.fillText(`조명기 ${nLights}대(주황 점)`, pad + W - 16, pad + H - 30);
     g.textAlign = 'center';
   }
   // 축척 막대
@@ -639,19 +648,20 @@ async function exportPNG(download = true) {
   const bx = pad + 20, by = pad + H - 30;
   g.fillStyle = '#111'; g.fillRect(bx, by, bar * pxPerM, 8);
   g.fillStyle = '#fff'; g.fillRect(bx + bar * pxPerM / 2, by + 1, bar * pxPerM / 2 - 1, 6);
-  g.fillStyle = '#111'; g.textAlign = 'left'; g.font = '600 18px ui-monospace,Menlo,monospace';
-  g.fillText(`0        ${bar} m`, bx, by - 14);
+  g.fillStyle = '#111'; g.textAlign = 'left'; g.font = '600 24px ui-monospace,Menlo,monospace';
+  g.fillText(`0`, bx, by - 18); g.fillText(`${bar} m`, bx + bar * pxPerM - 10, by - 18);
   // 제목란
   const v = state.venue;
   const ty = pad * 2 + H;
-  g.font = '700 30px "Apple SD Gothic Neo","Noto Sans KR",sans-serif';
-  g.fillText(`${state.meta.title || '무대 배치 평면도'} — ${v.name}`, pad, ty + 30);
-  g.font = '400 18px "Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  g.font = '700 34px "Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  g.fillText(`${state.meta.title || '무대 배치 평면도'} — ${v.name}`, pad, ty + 32);
+  g.font = '400 23px "Apple SD Gothic Neo","Noto Sans KR",sans-serif';
   const sum = lastChecks.filter((c) => c.status !== 'info').map((c) => `${ICON[c.status]} ${c.title} ${c.value || ''}`).slice(0, 4).join('  ·  ');
-  g.fillText(sum, pad, ty + 68);
+  g.fillText(sum, pad, ty + 78);
   g.fillStyle = '#555';
-  g.fillText(`3D 모델: ${v.modelSource}. 모델 단순화 오차가 있어 답사·실측을 대신하지 않습니다. 자동 점검 '적합'은 안전 승인이 아닙니다.`, pad, ty + 100);
-  g.fillText(`올팍 무대도면으로 작성 · ${new Date().toLocaleDateString('ko-KR')} · 한국체육산업개발 공식 서비스가 아님`, pad, ty + 126);
+  g.fillText(`3D 모델: ${v.modelSource}. 모델 단순화 오차가 있어 답사·실측을 대신하지 않습니다.`, pad, ty + 114);
+  g.fillText(`자동 점검 '적합'은 안전 승인이 아닙니다. 공연장 무대팀 협의·실측으로 확인하세요.`, pad, ty + 148);
+  g.fillText(`올팍 무대도면으로 작성 · ${new Date().toLocaleDateString('ko-KR')} · 한국체육산업개발 공식 서비스가 아님`, pad, ty + 182);
   const url = cv.toDataURL('image/png');
   if (download) dl(url, `무대평면도_${v.name}.png`);
   return url;
